@@ -5,12 +5,14 @@ import Comments from "./Comments";
 const Single = React.createClass({
   render() {
     // postId is available via the params prop set by the Router
-    const i = this.props.posts.findIndex((post) => post.code === this.props.params.postId);
+    const postId = this.props.params.postId;
+    const i = this.props.posts.findIndex((post) => post.code === postId);
     const post = this.props.posts[i];
+    const postComments = this.props.comments[postId] || [];
     console.log(post);
     return <div className="single-photo">
         <Photo i={i} post={post} {...this.props} />
-        <Comments/>
+        <Comments postComments={postComments}/>
     </div>;
   }
 });
