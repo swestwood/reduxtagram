@@ -17,4 +17,14 @@ export const store = createStore(rootReducer, defaultState);
 
 export const history = syncHistoryWithStore(browserHistory, store);
 
+if (module.hot) {
+    module.hot.accept("./reducers/", () => {
+        // Import syntax doesn't work unless at top level
+        const nextRootReducer = require("./reducers/index").default;
+        // Reducer gets hot-reloaded. Whenever there is a change, it replays back
+        // all the state changes on top
+        store.replaceReducer(nextRootReducer);
+    })
+}
+
 export default store;
